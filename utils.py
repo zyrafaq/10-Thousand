@@ -21,17 +21,15 @@ def calculate_score(figures):
     return sum(figure_values)
 
 def get_figures_from_dice(dice_rolled):
-    def find_combinations(remaining, path):
-        best_result = path
-        for fig in Constants.FIGURES:
+    def find_combinations(remaining):
+        results = []
+        for fig in sorted(Constants.FIGURES, key=lambda f: (-len(f), -Constants.FIGURES[f])):
             fig_counter = Counter(fig)
             if all(remaining[d] >= fig_counter[d] for d in fig_counter):
-                new_remaining = remaining.copy()
+                results.append(fig)
                 for d in fig:
-                    new_remaining[d] -= 1
-                candidate = find_combinations(new_remaining, path + [fig])
-                if sum(len(f) for f in candidate) > sum(len(f) for f in best_result):
-                    best_result = candidate
-        return best_result
+                    remaining[d] -= 1
+                return results + find_combinations(remaining)
+        return results
 
-    return find_combinations(Counter(dice_rolled), [])
+    return find_combinations(Counter(dice_rolled))
