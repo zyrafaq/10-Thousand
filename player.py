@@ -39,11 +39,14 @@ class Player:
             for figure in figures_chosen:
                 for die in figure:
                     dice_left.remove(die)
+            num_dice_left = len(dice_left)
+            if num_dice_left == 0:
+                print("Reached zero dice. Resetting.")
+                num_dice_left = Constants.NUM_dice
             print(f"Chosen figures: {', '.join(str(fig) for fig in figures_chosen)}")
-            print(f"dice left: {len(dice_left)}")
+            print(f"dice left: {num_dice_left}")
             score_gained_this_roll = utils.calculate_score(figures_chosen)
             print(f"That would be {score_gained_this_roll} score")
-            num_dice_left = len(dice_left)
             score_to_risk += score_gained_this_roll
             print(f"You have got {score_to_risk} score to risk.")
             if self.is_stop_condition_met(score_to_risk):
@@ -51,8 +54,5 @@ class Player:
                 score_gained_this_round = score_to_risk
                 print("Stop condition met")
                 break
-            if num_dice_left == 0:
-                print("Reached zero dice. Resetting.")
-                num_dice_left = Constants.NUM_dice
             roll += 1
         return score_gained_this_round
