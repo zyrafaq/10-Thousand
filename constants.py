@@ -10,5 +10,6 @@ class Constants:
         (6, 6, 6): 600,
         (1, 2, 3, 4, 5, 6): 2000
     }
-    NUM_DICES = 6
-    PIPS_PER_DICE = 6
+    NUM_dice = 6
+    PIPS_PER_die = 6
+    GOAL = 10000
