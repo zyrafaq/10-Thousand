@@ -6,37 +6,53 @@ class Player:
     def __init__(self):
         self.score = 0
 
-    def pick_figures(self, figures):
-        pass
+    def __new__(cls, *args, **kwargs):
+        if cls is Player:
+            raise Exception("Please use a bot or a human player object.")
+        return super().__new__(cls)
 
-    def is_stop_condition_met(self):
-        return bool(input(f"Stop now? Current score: {self.score}"))
+    def pick_figures(self, figures):
+        raise Exception("Please use a bot or a human player object")
+
+    def is_stop_condition_met(self, score_to_risk):
+        raise Exception("Please use a bot or a human player object")
 
     def play(self):
-        alive = True
+        num_dice_left = Constants.NUM_dice
+        score_gained_this_round = 0
+        score_to_risk = 0
         roll = 1
-        score = 0
-        num_dices_left = Constants.NUM_DICES
-        while alive:
-            # print(f"Roll: {roll}")
-            rolled_dices = utils.roll_dices(num_dices_left)
-            # print(f"Rolled: {rolled}")
-            dices_left = rolled_dices
-            figure_combinations = utils.get_figures_from_dices(rolled_dices)
-            figures_chosen = self.pick_figures(figure_combinations)
-            for figure in figures_chosen:
-                for dice in figure:
-                    dices_left.remove(dice)
-            score_gained_this_roll = utils.calculate_score(figures_chosen)
-            # print(f"Gained score: {score_gained_this_roll}")
-            num_dices_left = len(dices_left)
-            # print(f"Dices left: {dices_left}")
-            if score_gained_this_roll == 0:
-                alive = False
-                # print(f"Score lost this round: {score}")
-            else:
-                score += score_gained_this_roll
-            roll += 1
-            if self.is_stop_condition_met():
-                self.score += score
+        while True:
+            print(f"Roll: {roll}")
+            rolled_dice = utils.roll_dice(num_dice_left)
+            print(f"Rolled: {rolled_dice}")
+            dice_left = rolled_dice
+            figure_combinations = utils.get_figures_from_dice(rolled_dice)
+            if len(figure_combinations) == 0:
+                print("No figures available. You have lost this round.")
                 break
+            print(f"Figures: \n{'\n'.join(f'{i + 1}) {list(fig)}' for i, fig in enumerate(figure_combinations))}")
+            figures_chosen = self.pick_figures(figure_combinations)
+            if len(figures_chosen) == 0:
+                print("No figures chosen")
+                break
+            for figure in figures_chosen:
+                for die in figure:
+                    dice_left.remove(die)
+            print(f"Chosen figures: {', '.join(str(fig) for fig in figures_chosen)}")
+            print(f"dice left: {len(dice_left)}")
+            score_gained_this_roll = utils.calculate_score(figures_chosen)
+            print(f"That would be {score_gained_this_roll} score")
+            num_dice_left = len(dice_left)
+            score_to_risk += score_gained_this_roll
+            print(f"You have got {score_to_risk} score to risk.")
+            if self.is_stop_condition_met(score_to_risk):
+                self.score += score_to_risk
+                score_gained_this_round = score_to_risk
+                print("Stop condition met")
+                break
+            if num_dice_left == 0:
+                print("Reached zero dice. Resetting.")
+                num_dice_left = Constants.NUM_dice
+            roll += 1
+        return score_gained_this_round
