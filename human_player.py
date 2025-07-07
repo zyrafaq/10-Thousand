@@ -11,6 +11,7 @@ class HumanPlayer(Player):
             return f"Human: {self.name}"
         else:
             return f"Human"
+
     def pick_figures(self, figures):
         if len(figures) == 0:
             print("No figures. Sorry")
@@ -28,7 +29,7 @@ class HumanPlayer(Player):
             chosen_figures = [figures[i] for i in indexes if 0 <= i < len(figures)]
         return chosen_figures
 
-    def is_stop_condition_met(self, full_score_to_risk_and_current_score):
+    def is_stop_condition_met(self, score_to_risk):
         choice = input("Stop now? (t/N): ").strip().lower()
         if choice == "t":
             return True
@@ -36,4 +37,4 @@ class HumanPlayer(Player):
             return False
         else:
             print("Invalid input. Please type 't' to stop or press Enter to continue.")
-            return self.is_stop_condition_met()
+            return self.is_stop_condition_met(score_to_risk)
