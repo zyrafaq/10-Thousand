@@ -24,5 +24,5 @@ class Board:
                 if player.score >= Constants.GOAL:
                     print(f"\n{player} has reached the goal of {Constants.GOAL}!")
                     print(f"{player} wins!")
-                    return
+                    return round_number
             round_number += 1
