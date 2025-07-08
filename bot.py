@@ -9,7 +9,11 @@ class Bot(Player):
         self.score_to_save = score_to_save
 
     def __str__(self):
-        return "Bot"
+        def __str__(self):
+            if self.name:
+                return f"Bot {self.name}"
+            else:
+                return f"Bot"
 
     def pick_figures(self, figures):
         match self.strategy:
