@@ -1,6 +1,5 @@
 from constants import Constants
 import random
-import time
 
 
 class Board:
@@ -26,5 +25,4 @@ class Board:
                     print(f"\n{player} has reached the goal of {Constants.GOAL}!")
                     print(f"{player} wins!")
                     return
-                time.sleep(1.3)
             round_number += 1
