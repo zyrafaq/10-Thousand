@@ -1,3 +1,4 @@
+from constants import Constants
 from player import Player
 
 
@@ -22,4 +23,4 @@ class Bot(Player):
                 raise Exception(f"Unknown strategy {self.strategy}")
 
     def is_stop_condition_met(self, score_to_risk):
-        return score_to_risk >= self.score_to_save
+        return score_to_risk >= self.score_to_save or score_to_risk + self.score >= Constants.GOAL
