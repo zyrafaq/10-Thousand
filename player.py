@@ -33,9 +33,8 @@ class Player:
                 break
             print(f"Figures: \n{'\n'.join(f'{i + 1}) {list(fig)}' for i, fig in enumerate(figure_combinations))}")
             figures_chosen = self.pick_figures(figure_combinations)
-            if len(figures_chosen) == 0:
-                print("No figures chosen")
-                break
+            if not figures_chosen:
+                raise Exception("No figures chosen")
             for figure in figures_chosen:
                 for die in figure:
                     dice_left.remove(die)
