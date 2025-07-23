@@ -47,7 +47,7 @@ class Player:
             score_gained_this_roll = utils.calculate_score(figures_chosen)
             print(f"That would be {score_gained_this_roll} score")
             score_to_risk += score_gained_this_roll
-            print(f"You have got {score_to_risk} score to risk.")
+            print(f"You got {score_to_risk} score at risk.")
             if self.is_stop_condition_met(score_to_risk):
                 self.score += score_to_risk
                 score_gained_this_round = score_to_risk
