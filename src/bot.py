@@ -14,13 +14,3 @@ class Bot(Player):
             return f"Bot {self.name}"
         else:
             return "Bot"
-
-    def pick_figures(self, figures):
-        match self.strategy:
-            case "get_all":
-                return figures
-            case _:
-                raise Exception(f"Unknown strategy {self.strategy}")
-
-    def is_stop_condition_met(self, score_to_risk):
-        return score_to_risk >= self.score_to_save or score_to_risk + self.score >= Constants.GOAL
