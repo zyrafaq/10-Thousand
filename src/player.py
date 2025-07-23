@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 import utils
 from constants import Constants
 
@@ -8,14 +10,16 @@ class Player:
 
     def __new__(cls, *args, **kwargs):
         if cls is Player:
-            raise Exception("Please use a bot or a human player object.")
+            raise NotImplementedError("Please use a bot or a human player object.")
         return super().__new__(cls)
 
-    def pick_figures(self, figures):
-        raise Exception("Please use a bot or a human player object")
+    @abstractmethod
+    def pick_figures(self, figures: list) -> list:
+        pass
 
-    def is_stop_condition_met(self, score_to_risk):
-        raise Exception("Please use a bot or a human player object")
+    @abstractmethod
+    def is_stop_condition_met(self, score_to_risk: int, score: int) -> bool:
+        pass
 
     def play(self):
         num_dice_left = Constants.NUM_dice
@@ -48,7 +52,7 @@ class Player:
             print(f"That would be {score_gained_this_roll} score")
             score_to_risk += score_gained_this_roll
             print(f"You got {score_to_risk} score at risk.")
-            if self.is_stop_condition_met(score_to_risk):
+            if self.is_stop_condition_met(score_to_risk, self.score):
                 self.score += score_to_risk
                 score_gained_this_round = score_to_risk
                 print("Stop condition met")
