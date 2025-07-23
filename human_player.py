@@ -13,9 +13,6 @@ class HumanPlayer(Player):
             return f"Human"
 
     def pick_figures(self, figures):
-        if len(figures) == 0:
-            print("No figures. Sorry")
-            return []
         if len(figures) == 1:
             print("Only one figure. Using it")
             return figures
