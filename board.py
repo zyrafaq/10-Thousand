@@ -14,7 +14,7 @@ class Board:
             self.players.insert(0, starting_player)
         print(f"{self.players[0]} is the starting player")
         while True:
-            print(f"Round: {round_number}")
+            print(f"\nRound: {round_number}")
             for player in self.players:
                 print(f"\n{player}'s turn")
                 print(f"Current score: {player.score}")
