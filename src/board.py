@@ -1,21 +1,26 @@
-from constants import Constants
 import random
+
+from constants import Constants
+from player import Player
 
 
 class Board:
-    def __init__(self, players):
-        self.players = players
+    def __init__(self, players: list[Player]):
+        self.players = {player.id: player for player in players}
+        self.score_to_risk = 0
 
-    def play(self, randomize_starting_player=False):
+    def play(self, randomize_starting_player: bool = False) -> int:
         round_number = 1
         if randomize_starting_player:
-            starting_player = random.choice(self.players)
-            self.players.remove(starting_player)
-            self.players.insert(0, starting_player)
-        print(f"{self.players[0]} is the starting player")
+            starting_player = random.choice(list(self.players.keys()))
+            starting_player_id = self.players[starting_player].id
+        else:
+            starting_player_id = list(self.players.keys())[0]
+        print(f"{self.players[starting_player_id]} is the starting player")
+        ordered_players_list = sorted(self.players.values(), key=lambda p: (p.id != starting_player_id, p.id))
         while True:
             print(f"\nRound: {round_number}")
-            for player in self.players:
+            for player in ordered_players_list:
                 print(f"\n{player}'s turn")
                 print(f"Current score: {player.score}")
                 score_gained = player.play()

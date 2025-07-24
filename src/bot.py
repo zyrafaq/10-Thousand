@@ -1,12 +1,11 @@
 from player import Player
-from strategy import Strategy
 
 
 class Bot(Player):
-    def __init__(self, strategy: Strategy, name=None):
+    def __init__(self, name=None):
         super().__init__()
         self.name = name
-        self.strategy = strategy
+        self.strategy = None
 
     def __str__(self):
         if self.name:
@@ -17,5 +16,5 @@ class Bot(Player):
     def pick_figures(self, figures: list) -> list:
         return self.strategy.pick_figures(figures)
 
-    def is_stop_condition_met(self, score_to_risk: int, score: int) -> bool:
-        return self.strategy.is_stop_condition_met(score_to_risk, score)
+    def is_stop_condition_met(self) -> bool:
+        return self.strategy.is_stop_condition_met()

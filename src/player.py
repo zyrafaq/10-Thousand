@@ -1,3 +1,4 @@
+import uuid
 from abc import ABC, abstractmethod
 
 import utils
@@ -7,13 +8,14 @@ from constants import Constants
 class Player(ABC):
     def __init__(self):
         self.score = 0
+        self.id = uuid.uuid4().hex
 
     @abstractmethod
     def pick_figures(self, figures: list) -> list:
         pass
 
     @abstractmethod
-    def is_stop_condition_met(self, score_to_risk: int, score: int) -> bool:
+    def is_stop_condition_met(self) -> bool:
         pass
 
     def play(self):
@@ -47,7 +49,7 @@ class Player(ABC):
             print(f"That would be {score_gained_this_roll} score")
             score_to_risk += score_gained_this_roll
             print(f"You got {score_to_risk} score at risk.")
-            if self.is_stop_condition_met(score_to_risk, self.score):
+            if self.is_stop_condition_met():
                 self.score += score_to_risk
                 score_gained_this_round = score_to_risk
                 print("Stop condition met")
