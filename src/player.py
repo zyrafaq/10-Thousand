@@ -1,17 +1,12 @@
-from abc import abstractmethod
+from abc import ABC, abstractmethod
 
 import utils
 from constants import Constants
 
 
-class Player:
+class Player(ABC):
     def __init__(self):
         self.score = 0
-
-    def __new__(cls, *args, **kwargs):
-        if cls is Player:
-            raise NotImplementedError("Please use a bot or a human player object.")
-        return super().__new__(cls)
 
     @abstractmethod
     def pick_figures(self, figures: list) -> list:
